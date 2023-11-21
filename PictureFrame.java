@@ -9,7 +9,11 @@ import javax.swing.*;
 
 public class PictureFrame {
   public int[] reroll = null;
-  public Main master = null;
+  public Main master = null
+		  
+  private int _x = 30;
+  private int _y = 20;
+  private int degree = 10;
 
   class DominoPanel extends JPanel {
     private static final long serialVersionUID = 4190229282411119364L;
@@ -17,7 +21,7 @@ public class PictureFrame {
     public void drawGrid(Graphics g) {
       for (int are = 0; are < 7; are++) {
         for (int see = 0; see < 8; see++) {
-          drawDigitGivenCentre(g, 30 + see * 20, 30 + are * 20, 20,
+        	drawDigitGivenGridCentre(g, _x + see * 20, _x + are * 20, _x,
               master.grid[are][see]);
         }
       }
@@ -27,11 +31,11 @@ public class PictureFrame {
 
     public void drawHeadings(Graphics g) {
       for (int are = 0; are < 7; are++) {
-        fillDigitGivenCentre(g, 10, 30 + are * 20, 20, are+1);
+        fillDigitGivenCentre(g, 10, _x + are * 20, _x, are+1);
       }
 
       for (int see = 0; see < 8; see++) {
-        fillDigitGivenCentre(g, 30 + see * 20, 10, 20, see+1);
+        fillDigitGivenCentre(g, _x + see * 20, 10, _y, see+1);
       }
     }
 
@@ -42,22 +46,32 @@ public class PictureFrame {
         int w = Math.abs(d.lx - d.hx) + 1;
         int h = Math.abs(d.ly - d.hy) + 1;
         g.setColor(Color.WHITE);
-        g.fillRect(20 + x * 20, 20 + y * 20, w * 20, h * 20);
+        g.fillRect(_y + x * 20, _y + y * 20, w * 20, h * 20);
         g.setColor(Color.RED);
-        g.drawRect(20 + x * 20, 20 + y * 20, w * 20, h * 20);
-        drawDigitGivenCentre(g, 30 + d.hx * 20, 30 + d.hy * 20, 20, d.high,
+        g.drawRect(_y + x * 20, _y + y * 20, w * 20, h * 20);
+        drawDigitGivenDominoCentre(g, _x + d.hx * 20, _x + d.hy * 20, _y, d.high,
             Color.BLUE);
-        drawDigitGivenCentre(g, 30 + d.lx * 20, 30 + d.ly * 20, 20, d.low,
+        drawDigitGivenDominoCentre(g, _x + d.lx * 20, _x + d.ly * 20, _y, d.low,
             Color.BLUE);
       }
     }
 
-    void drawDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
+    void drawDigitGivenGridCentre(Graphics g, int x, int y, int diameter, int n) {
       int radius = diameter / 2;
       g.setColor(Color.BLACK);
       // g.drawOval(x - radius, y - radius, diameter, diameter);
       FontMetrics fm = g.getFontMetrics();
       // convert the string to an integer
+      String txt = Integer.toString(n);
+      g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+    }
+
+    void drawDigitGivenDominoCentre(Graphics g, int x, int y, int diameter, int n,
+        Color c) {
+      int radius = diameter / 2;
+      g.setColor(c);
+      // g.drawOval(x - radius, y - radius, diameter, diameter);
+      FontMetrics fm = g.getFontMetrics();
       String txt = Integer.toString(n);
       g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
     }
