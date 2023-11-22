@@ -71,9 +71,7 @@ public class PictureFrame {
       int radius = diameter / 2;
       g.setColor(c);
       // g.drawOval(x - radius, y - radius, diameter, diameter);
-      FontMetrics fm = g.getFontMetrics();
-      String txt = Integer.toString(n);
-      g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+      drowFunc(g, x, y, n);
     }
 
     void fillDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
@@ -82,10 +80,16 @@ public class PictureFrame {
       g.fillOval(x - radius, y - radius, diameter, diameter);
       g.setColor(Color.BLACK);
       g.drawOval(x - radius, y - radius, diameter, diameter);
-      FontMetrics fm = g.getFontMetrics();
-      String txt = Integer.toString(n);
-      g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+      drowFunc(g, x, y, n);
     }
+
+
+
+	private void drowFunc(Graphics g, int x, int y, int n) {
+		FontMetrics fm = g.getFontMetrics();
+		  String txt = Integer.toString(n);
+		  g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+	}
 
     protected void paintComponent(Graphics g) {
       g.setColor(Color.YELLOW);
