@@ -1,10 +1,15 @@
+package base;
 import java.awt.*;
 
 import javax.swing.*;
+/**
+ * @author Kevan Buckley, maintained by __student
+ * @version 2.0, 2014
+ */
 
 public class PictureFrame {
   public int[] reroll = null;
-  Aardvark master = null;
+  public Main master = null;
 
   class DominoPanel extends JPanel {
     private static final long serialVersionUID = 4190229282411119364L;
@@ -18,15 +23,7 @@ public class PictureFrame {
       }
     }
 
-    public void drawGridLines(Graphics g) {
-      g.setColor(Color.LIGHT_GRAY);
-      for (int are = 0; are <= 7; are++) {
-        g.drawLine(20, 20 + are * 20, 180, 20 + are * 20);
-      }
-      for (int see = 0; see <= 8; see++) {
-        g.drawLine(20 + see * 20, 20, 20 + see * 20, 160);
-      }
-    }
+
 
     public void drawHeadings(Graphics g) {
       for (int are = 0; are < 7; are++) {
@@ -55,21 +52,24 @@ public class PictureFrame {
       }
     }
 
-    
     void drawDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
       int radius = diameter / 2;
       g.setColor(Color.BLACK);
       // g.drawOval(x - radius, y - radius, diameter, diameter);
-      drawFun(g,n,x,y);
+      FontMetrics fm = g.getFontMetrics();
+      // convert the string to an integer
+      String txt = Integer.toString(n);
+      g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
     }
 
-
-    void drawDigitGivenDominoCentre(Graphics g, int x, int y, int diameter, int n,
+    void drawDigitGivenCentre(Graphics g, int x, int y, int diameter, int n,
         Color c) {
       int radius = diameter / 2;
       g.setColor(c);
       // g.drawOval(x - radius, y - radius, diameter, diameter);
-      drawFun(g,n,x,y);
+      FontMetrics fm = g.getFontMetrics();
+      String txt = Integer.toString(n);
+      g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
     }
 
     void fillDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
@@ -97,14 +97,16 @@ public class PictureFrame {
       // }
       //
       // drawGrid(g);
+      Location l = new Location(1,2);
+
       if (master.mode == 1) {
-        drawGridLines(g);
+        l.drawGridLines(g);
         drawHeadings(g);
         drawGrid(g);
         master.drawGuesses(g);
       }
       if (master.mode == 0) {
-        drawGridLines(g);
+        l.drawGridLines(g);
         drawHeadings(g);
         drawGrid(g);
         master.drawDominoes(g);
@@ -112,13 +114,14 @@ public class PictureFrame {
     }
 
     public Dimension getPreferredSize() {
+      // the application window always prefers to be 202x182
       return new Dimension(202, 182);
     }
   }
 
   public DominoPanel dp;
 
-  public void PictureFrame(Aardvark sf) {
+  public void PictureFrame(Main sf) {
     master = sf;
     if (dp == null) {
       JFrame f = new JFrame("Abominodo");
