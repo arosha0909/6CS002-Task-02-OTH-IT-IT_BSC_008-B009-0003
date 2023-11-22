@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class PictureFrame {
   public int[] reroll = null;
-  Main master = null;
+  Aardvark master = null;
 
   class DominoPanel extends JPanel {
     private static final long serialVersionUID = 4190229282411119364L;
