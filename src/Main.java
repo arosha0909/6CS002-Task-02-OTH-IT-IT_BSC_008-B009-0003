@@ -21,7 +21,7 @@ public class Main {
   public List<Domino> _d;
   public List<Domino> _g;
   public int[][] grid = new int[7][8];
-  public int[][] gg = new int[7][8];
+  public int[][] coordinates = new int[7][8];
   int mode = -1;
   int cf;
   int score;
