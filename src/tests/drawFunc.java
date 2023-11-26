@@ -11,10 +11,9 @@ class drawFunc {
 	void testDrawFunction() {
         Graphics graphics = Mockito.mock(Graphics.class);
 
-        // Call the method from the utility class
         FunctionDrawer.drawFunction(graphics, 10, 20, 42);
 
-        // Verify that the correct method of the graphics object is called
+        // verify output
         verify(graphics).drawString(anyString(), anyInt(), anyInt());
     }
 
